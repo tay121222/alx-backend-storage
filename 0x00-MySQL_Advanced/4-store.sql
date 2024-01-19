@@ -1,3 +1,4 @@
+-- SQL script that creates a trigger that decreases the quantity of an item after adding a new order
 DELIMITER //
 
 DROP TRIGGER IF EXISTS update_item_qty;
