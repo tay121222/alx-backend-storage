@@ -1,7 +1,6 @@
 --  SQL script that creates a stored procedure ComputeAverageWeightedScoreForUser
 DELIMITER //
 
-DROP PROCEDURE IF EXISTS ComputeAverageWeightedScoreForUser;
 CREATE PROCEDURE ComputeAverageWeightedScoreForUser(IN user_id INT)
 BEGIN
     DECLARE avg_weighted_score FLOAT;
