@@ -1,3 +1,4 @@
+--  SQL script that creates a stored procedure ComputeAverageWeightedScoreForUser
 DELIMITER //
 
 DROP PROCEDURE IF EXISTS ComputeAverageWeightedScoreForUser;
