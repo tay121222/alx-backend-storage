@@ -3,6 +3,7 @@
 import redis
 import uuid
 from typing import Union, Callable, Optional
+from functools import wraps
 
 
 class Cache:
@@ -36,3 +37,18 @@ class Cache:
     def get_int(self, key: str) -> Optional[int]:
         """will automatically parametrize Cache.get"""
         return self.get(key, fn=int)
+
+
+def count_calls(method: Callable) -> Callable:
+    """Decorator to count how many times a method is called."""
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        key = method.__qualname__
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+
+    return wrapper
+
+
+Cache.store = count_calls(Cache.store)
