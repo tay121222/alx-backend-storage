@@ -36,12 +36,12 @@ class Cache:
     def get(
             self,
             key: str,
-            fn: Optional[Callable[[bytes], Union[str, bytes, int]]] = None
+            fn: Callable = None,
             ) -> Union[str, bytes, int, None]:
         """get method that take a key string argument and an
         optional Callable argument named fn"""
         data = self._redis.get(key)
-        return fn(data) if data is not None and fn else data
+        return fn(data) if fn is not None else data
 
     def get_str(self, key: str) -> Optional[str]:
         """will automatically parametrize Cache.get"""
@@ -49,7 +49,7 @@ class Cache:
 
     def get_int(self, key: str) -> Optional[int]:
         """will automatically parametrize Cache.get"""
-        return self.get(key, fn=int)
+        return self.get(key, lambda x: int(x))
 
 
 Cache.store = count_calls(Cache.store)
