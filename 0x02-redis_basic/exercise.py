@@ -11,6 +11,7 @@ def count_calls(method: Callable) -> Callable:
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
+        """wrapper"""
         key = method.__qualname__
         self._redis.incr(key)
         return method(self, *args, **kwargs)
@@ -23,6 +24,7 @@ def call_history(method: Callable) -> Callable:
     and outputs for a particular function"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
+        """Wrapper"""
         input_key = "{}:inputs".format(method.__qualname__)
         output_key = "{}:outputs".format(method.__qualname__)
         self._redis.rpush(input_key, str(args))
@@ -39,9 +41,9 @@ def replay(func: Callable = None):
     method_name = func.__qualname__
     input_key = "{}:inputs".format(method_name)
     output_key = "{}:outputs".format(method_name)
-
-    input_history = cache._redis.lrange(input_key, 0, -1)
-    output_history = cache._redis.lrange(output_key, 0, -1)
+    cache = redis.Redis()
+    input_history = cache.lrange(input_key, 0, -1)
+    output_history = cache.lrange(output_key, 0, -1)
 
     num_calls = len(input_history)
 
