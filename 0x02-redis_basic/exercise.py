@@ -33,7 +33,7 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
-def replay(func, cache):
+def replay(func):
     """replay function to display the history of calls of
     a particular function"""
     method_name = func.__qualname__
