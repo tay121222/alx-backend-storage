@@ -56,6 +56,7 @@ def replay(func: Callable = None):
 
 
 class Cache:
+    """class using Redis for storage"""
     def __init__(self):
         """ store an instance of the Redis client as a private variable"""
         self._redis = redis.Redis()
