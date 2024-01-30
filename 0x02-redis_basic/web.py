@@ -21,7 +21,7 @@ def track_access_and_cache(expiration: int = 10) -> Callable:
             if cached_response:
                 return cached_response.decode('utf-8')
             response = func(url)
-            redis_client.setex("cached:{}".format(url), expiration, response)
+            redis_client.setex("cached:{}", expiration, response)
 
             return response
 
@@ -32,5 +32,5 @@ def track_access_and_cache(expiration: int = 10) -> Callable:
 
 @track_access_and_cache()
 def get_page(url: str) -> str:
-    """Get the HTML content of a given URL"""
+    """Get the HTML content of given URL"""
     return requests.get(url).text
