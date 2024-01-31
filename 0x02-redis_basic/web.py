@@ -21,7 +21,7 @@ def track_access_and_cache(expiration: int = 10) -> Callable:
             if cached_response:
                 return cached_response.decode('utf-8')
             response = func(url)
-            redis_client.setex("cached:{}", expiration, response)
+            redis_client.setex("cached:{}".format(url), expiration, response)
 
             return response
 
