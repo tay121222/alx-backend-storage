@@ -15,6 +15,8 @@ def decorator(func: Callable) -> Callable:
 
     @wraps(func)
     def wrapper(url):
+        """ just a wrapper"""
+
         redis_client.incr("count:{}".format(url))
         cached_response = redis_client.get("cached:{}".format(url))
         if cached_response:
