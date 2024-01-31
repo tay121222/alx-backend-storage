@@ -11,8 +11,10 @@ redis_client = redis.Redis()
 
 
 def decorator(func: Callable) -> Callable:
+    """Decorator wrapper"""
+
     @wraps(func)
-    def wrapper(url: str) -> str:
+    def wrapper(url):
         redis_client.incr("count:{}".format(url))
         cached_response = redis_client.get("cached:{}".format(url))
         if cached_response:
